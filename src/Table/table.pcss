@@ -1,4 +1,105 @@
 
-.react-table{
+.react-table {
+  .hidden {
+    display: none;
+  }
+  thead > tr > th {
+    position: relative;
 
+    > div {
+      margin: 0;
+    }
+    &.sortable {
+      > .content {
+        margin-right: 20px;
+      }
+      .sort {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .sort--up, .sort--down {
+          flex: 0 0 14px;
+          height: 50%;
+          text-align: center;
+
+        }
+
+      }
+    }
+  }
+  tfoot {
+    .pager {
+      display: grid;
+      grid-template-rows: auto;
+      grid-template-columns: auto 100px 45px 45px 100px 45px 45px;
+      grid-template-areas: "open page-select left-double left right right-double";
+      &-position {
+        line-height: 40px;
+        font-size: 16px;
+      }
+      &-select {
+        position: relative;
+        padding-right: 50px;
+        height: 40px;
+        border: 1px solid #ebebeb;
+        margin: auto 0px;
+        &-value {
+          text-align: left;
+          margin: 0 6px;
+          display: inline-block;
+          width: 100%;
+          line-height: 40px;
+        }
+        &-button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 32px;
+          line-height: 40px;
+          font-size: 16px;
+        }
+        &-dropdown {
+          position: absolute;
+          right: 0;
+          left: 0;
+          top: 38px;
+          border: 1px solid #ebebeb;
+          ol {
+            margin: 0;
+             list-style-type: none;
+            width: 100%;
+            background: white;
+            padding: 0;
+            li {
+              display: block;
+              text-align: left;
+              padding: 0 6px;
+              line-height: 32px;
+              &.selected{ background-color:#ebebeb; }
+              &:hover {
+                cursor: pointer;
+                background-color:#ebebeb ;
+              }
+
+            }
+          }
+        }
+
+      }
+      .paging-button {
+        border-radius: 45px;
+        padding: 6px;
+        background-color: transparent;
+        margin: auto 6px;
+        &:hover {
+          border: 1px solid #464646;
+        }
+      }
+    }
+  }
 }
