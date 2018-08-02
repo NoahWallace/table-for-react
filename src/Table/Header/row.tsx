@@ -27,7 +27,7 @@ export class Row extends React.Component<any, any> {
 
         return (
 
-            <tr >
+            <tr className="header_row" >
                  {this.getCells()}
             </tr>
 

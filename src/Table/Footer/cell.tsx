@@ -6,48 +6,50 @@ import {
     faAngleDoubleLeft,
     faAngleLeft,
     faAngleRight,
-    faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
 import {PagerSelect} from "./pagerSelect";
-
-import {IProviderState, TableContext} from "../provider";
+import classNames from 'classnames';
+import {TableContext} from "../provider";
 
 class Cell extends React.Component<any, any> {
     render() {
-        const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart} = this.props;
-
+        const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headerLength} = this.props;
+        const pgPrevDsbl = currentPage === 1,
+            pgPrevCls = classNames("paging_button",{"paging_button--disabled":pgPrevDsbl}),
+            pgNextDsbl = currentPage === pageCount,
+            pgNextCls=classNames("paging_button",{"paging_button--disabled":pgNextDsbl})
         return (
-            <td colSpan={6}>
-                <div className={"pager"}>
+            <td colSpan={headerLength} className="cell">
+                <div className={"content pager"}>
                     <PagerSelect setPageSize={setPageSize}
                                  pageSize={pageSize}
                                  currentPage={currentPage}
                                  totalPages={pageCount}/>
                     <button type="button"
-                            className={"paging-button"}
+                            className={pgPrevCls}
                             onClick={pageStart}
-                            disabled={currentPage === 1}
+                            disabled={pgPrevDsbl}
                     >
                         <FontAwesomeIcon icon={faAngleDoubleLeft}/>
                     </button>
                     <button type="button"
-                            className={"paging-button"}
+                            className={pgPrevCls}
                             onClick={pagePrev}
-                            disabled={currentPage === 1}
+                            disabled={pgPrevDsbl}
                     >
                         <FontAwesomeIcon icon={faAngleLeft}/></button>
-                    <div className={'pager-position'}>{currentPage} of {pageCount}</div>
+                    <div className={'pager_position'}>{currentPage} of {pageCount}</div>
                     <button type="button"
-                            className={"paging-button"}
+                            className={pgNextCls}
                             onClick={pageNext}
-                            disabled={currentPage === pageCount}
+                            disabled={pgNextDsbl}
                     >
                         <FontAwesomeIcon icon={faAngleRight}/>
                     </button>
                     <button type="button"
-                            className={"paging-button"}
+                            className={pgNextCls}
                             onClick={pageEnd}
-                            disabled={currentPage === pageCount}
+                            disabled={pgNextDsbl}
                     >
                         <FontAwesomeIcon icon={faAngleDoubleRight}/>
                     </button>
@@ -60,10 +62,10 @@ class Cell extends React.Component<any, any> {
 export default props => (
     <TableContext.Consumer>
         {state => {
-            const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart} = state;
-
+            const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headers} = state;
+            const headerLength=headers[headers.length-1].length
             return (
-                <Cell {...{setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart}} />)
+                <Cell {...{setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headerLength}} />)
         }}
     </TableContext.Consumer>
 )

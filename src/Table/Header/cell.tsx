@@ -34,7 +34,7 @@ class Cell extends React.Component<IHeaderCellProps, {}> {
         const {title, options = {}, icons = {}, direction} = this.props,
             {headerClass = '', colSpan = 1, sortable} = options;
 
-        let ctx = classNames(headerClass, {'sortable': sortable});
+        let ctx = classNames("cell", {'cell--sortable': sortable},headerClass);
 
         return (
 

@@ -1,24 +1,22 @@
 import * as React from "react";
-import ctx from 'classnames';
-import {ITableProps, IHeaderProps} from './table.d';
+import cls from 'classnames';
 
-import {getSortDirection} from "./Utils";
-
-import './table.pcss';
 import {TableProvider} from "./provider";
 import {THead} from "./Header";
 import TBody from "./Body";
 import {TFoot} from "./Footer";
 
+import './table.pcss';
+import {ITableProps} from './table.d';
 
 export class Table extends React.Component<ITableProps, {}> {
 
 
 
     render() {
-        const {className, caption, headers, options = {}, rows} = this.props;
+        const {className, caption, headers, options = {}} = this.props;
 
-        let cssClass = ctx('react-table', className);
+        let cssClass = cls('react-table', className);
         return (
             <TableProvider {...this.props} >
                 <table className={cssClass}>

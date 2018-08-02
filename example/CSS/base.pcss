@@ -1,0 +1,26 @@
+@import "./_variables.pcss";
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 4px;
+  padding: 4px;
+}
+
+
+
+pre{
+  counter-reset: line;
+  code{
+    counter-increment: line;
+    display: block;
+    span:first-child{
+      width:24px;
+      display:inline-block;
+      margin-right:4px;
+      text-align: right;
+      &:before {
+        content: counter(line);
+        -webkit-user-select: none;
+      }
+    }
+  }
+}

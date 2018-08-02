@@ -4,7 +4,7 @@ import {Row} from './row'
 
 
 export const TFoot: React.StatelessComponent<{}> = () => (
-    <tfoot>
+    <tfoot className="footer">
         <Row/>
     </tfoot>
 )

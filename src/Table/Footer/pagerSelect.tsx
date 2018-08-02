@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
+import cls from 'classnames'
 
 export class PagerSelect extends React.Component<any, any> {
     state = {
@@ -24,16 +25,16 @@ export class PagerSelect extends React.Component<any, any> {
     render() {
         const {pageSize} = this.props;
         let options = this.state.options.map((item) => <li key={`dropdown_${item}`}
-                                                           className={`${item === pageSize ? "selected" : ''}`}
+                                                           className={cls("dropdown_item",{"selected":item === pageSize})}
                                                            onClick={() => this.setValue(item)}>{item}</li>);
         let hidden = this.state.open ? '' : 'hidden';
         return (
-            <div className="pager-select">
-                <span className='pager-select-value'>{pageSize}</span>
-                <div className='pager-select-button' onClick={this.toggleDropdown}><FontAwesomeIcon icon={faAngleDown}/>
+            <div className="pager_select">
+                <span className='pager_select_value'>{pageSize}</span>
+                <div className='pager_select_button' onClick={this.toggleDropdown}><FontAwesomeIcon icon={faAngleDown}/>
                 </div>
-                <div className={`pager-select-dropdown ${hidden}`}>
-                    <ol>
+                <div className={`pager_select_dropdown ${hidden}`}>
+                    <ol className={"dropdown_valuegroup"}>
                         {options}
                     </ol>
                 </div>
