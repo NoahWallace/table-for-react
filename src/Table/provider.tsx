@@ -8,8 +8,13 @@ export interface IProviderState extends ITableProps {
     pageSize: number;
     paged?:boolean;
     setPageSize:Function;
-    totalPages:number;
+    pageCount:number;
     currentPage:number;
+    pageEnd:Function;
+    pageStart:Function;
+    pageNext:Function;
+    pagePrev:Function;
+    currentPosition:number;
 }
 
 export const TableContext = React.createContext<IProviderState | any>({});
@@ -21,8 +26,19 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
         headers: [],
         rows: [],
         pageSize:10,
-        totalPages:0,
-        currentPage:0,
+        pageCount:0,
+        currentPage:1,
+        currentPosition:0,
+        pageEnd:()=>{},
+        pageStart:()=>{},
+        pageNext:()=>{
+            this.setState((state)=>{
+                const {currentPage:prevPage} = state;
+                    let currentPage =prevPage+1;
+                return {...state,currentPage}
+            })
+        },
+        pagePrev:()=>{},
         setPageSize:(value)=>{
 
             this.setState((state)=>{
@@ -86,7 +102,7 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
                 const {options, id} = headerCell;
                 if (options && options.initialSort) {
                     const sortValue = getSortDirection(options.initialSort);
-                    const sortId = options.sortOnId ? options.sortOnId : id;
+                    const sortId =  id;
                     if (options.initialSortIdx !== undefined &&
                         options.initialSortIdx !== null &&
                         !isNaN(options.initialSortIdx)) {
@@ -103,16 +119,20 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
             const {headers} = this.props,
                 {sortState} = this.state;
 
+            this.state.pageCount=Math.ceil(rows.length/10);
+
             if (!onSort) {
                 const sortedRows = setSortedRows(rows, headers, sortState);
                 this.state.rows = sortedRows;
             }
             else {
-                this.state.rows = rows
+                this.state.rows = rows;
             }
         }
     }
-
+    setPageCount = () =>{
+        this.setState((state)=>{return {...state,pageCount:state.rows.length}})
+    }
     render() {
         return (
             <TableContext.Provider value={this.state}>

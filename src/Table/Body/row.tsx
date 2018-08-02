@@ -6,34 +6,37 @@ export const Row = (props) => {
         const headerLastIndex = props.headers.length - 1,
             headers=props.headers[headerLastIndex],
             keys=headers.map((item)=>item.id);
-
+        /*
+         * If Row is an array of strings,numbers or components
+         */
         if (Array.isArray(props.cells)) {
             return props.cells.map((v,idx) =>{
                 if(idx > headers.length -1){return null}
                 return( <Cell key={`Cell_${idx}`} value={v}/>)
             })
         }
-
-        let entries:any[] = Object.entries(props.cells)
+        /*
+         * If Row is an object
+         */
+        let cells:any[] = Object.entries(props.cells)
             .map((cell,idx) => {
-
-                props.headers[headerLastIndex].map((item, idx) => {
-                    const sortId = item.id;
+                headers.map((header, idx) => {
+                    const sortId = header.id;
                     if (sortId === cell[0]) {
                         cell.push(idx)
                     }
-                })
+                });
                 return cell;
             })
             .filter(c => c[2] !== undefined)
             .sort((a, b) => a[2] > b[2] ? 1 : -1)
 
-        keys.map((_,idx)=>{
-            let hasItem=entries.find((b)=>b[0]===_)
-            if(!hasItem){entries.splice(idx,0,[_,"",idx])}
+        keys.map((entry,idx)=>{
+            let hasItem=cells.find((b)=>b[0]===entry)
+            if(!hasItem){cells.splice(idx,0,[entry,"",idx])}
         })
 
-        return entries.map((_,idx) => <Cell key={`body_${idx}_row`} value={_[1]}/>)
+        return cells.map((_,idx) => <Cell key={`body_${idx}_row`} value={_[1]}/>)
     }
 
     return (

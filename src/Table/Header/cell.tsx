@@ -20,12 +20,9 @@ class Cell extends React.Component<IHeaderCellProps, {}> {
 
 
     toggleSort = (event) => {
-        const {setSortState, id, options} = this.props,
-            {sortOnId} = options,
-            sortId = sortOnId ? sortOnId : id;
+        const {setSortState, id} = this.props;
         event.preventDefault();
-
-        setSortState(event, sortId)
+        setSortState(event,id)
     }
 
     shouldComponentUpdate(p) {
@@ -34,7 +31,7 @@ class Cell extends React.Component<IHeaderCellProps, {}> {
 
     render() {
 
-        const {title, id, options = {}, icons = {}, direction} = this.props,
+        const {title, options = {}, icons = {}, direction} = this.props,
             {headerClass = '', colSpan = 1, sortable} = options;
 
         let ctx = classNames(headerClass, {'sortable': sortable});
@@ -58,8 +55,8 @@ export default props => (
     <TableContext.Consumer>
         {state => {
             const {setSortState, sortState} = state,
-                {id, sortOnId} = props,
-                sort = sortState.find((item) => item[0] === (sortOnId ? sortOnId : id)),
+                {id} = props,
+                sort = sortState.find((item) => item[0] === id),
                 currentSortState = sort && sort[1] ? sort[1] : 0;
 
             return (<Cell {...{...props, setSortState}} direction={currentSortState}/>)
