@@ -1,0 +1,1 @@
+import * as React from 'react'import className from 'classnames'export class Tbody extends React.Component<any, any>{    render(){        return(            <thead>            </thead>        )    }}const HeaderRow = () => {    return (        <row></row>    )}
