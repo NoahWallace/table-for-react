@@ -14,7 +14,7 @@ import {IProviderState, TableContext} from "../provider";
 
 class Cell extends React.Component<any, any> {
     render() {
-        const {setPageSize, pageSize, pageCount, currentPage, pageNext} = this.props;
+        const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart} = this.props;
 
         return (
             <td colSpan={6}>
@@ -23,16 +23,32 @@ class Cell extends React.Component<any, any> {
                                  pageSize={pageSize}
                                  currentPage={currentPage}
                                  totalPages={pageCount}/>
-                    <button type="button" className={"paging-button"}>
+                    <button type="button"
+                            className={"paging-button"}
+                            onClick={pageStart}
+                            disabled={currentPage === 1}
+                    >
                         <FontAwesomeIcon icon={faAngleDoubleLeft}/>
                     </button>
-                    <button type="button" className={"paging-button"}>
+                    <button type="button"
+                            className={"paging-button"}
+                            onClick={pagePrev}
+                            disabled={currentPage === 1}
+                    >
                         <FontAwesomeIcon icon={faAngleLeft}/></button>
                     <div className={'pager-position'}>{currentPage} of {pageCount}</div>
-                    <button type="button" className={"paging-button"} onClick={pageNext}>
+                    <button type="button"
+                            className={"paging-button"}
+                            onClick={pageNext}
+                            disabled={currentPage === pageCount}
+                    >
                         <FontAwesomeIcon icon={faAngleRight}/>
                     </button>
-                    <button type="button" className={"paging-button"}>
+                    <button type="button"
+                            className={"paging-button"}
+                            onClick={pageEnd}
+                            disabled={currentPage === pageCount}
+                    >
                         <FontAwesomeIcon icon={faAngleDoubleRight}/>
                     </button>
                 </div>
@@ -44,9 +60,10 @@ class Cell extends React.Component<any, any> {
 export default props => (
     <TableContext.Consumer>
         {state => {
-            const {setPageSize, pageSize, pageCount, currentPage, pageNext} = state;
+            const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart} = state;
 
-            return (<Cell {...{setPageSize, pageSize, pageCount, currentPage, pageNext}} />)
+            return (
+                <Cell {...{setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart}} />)
         }}
     </TableContext.Consumer>
 )

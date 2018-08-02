@@ -4,11 +4,11 @@ import {TableContext} from "../provider";
 
 class TBody extends React.Component<any, any> {
     getRows = () => {
-        const {rows, headers, paged, pageSize} = this.props;
-        const cb = (cells, idx) => (<Row key={`body_${idx}_row`} cells={cells} headers={headers}/>)
+        const {rows, headers, paged, pageSize,currentPosition} = this.props;
+        const cb = (cells, idx) => (<Row key={`body_${idx}_row`} cells={cells} headers={headers}/>);
 
         if (paged) {
-            return rows.slice(0, pageSize).map(cb)
+            return rows.slice(currentPosition, currentPosition+pageSize).map(cb)
         }
         return rows.map(cb)
     }
@@ -28,8 +28,8 @@ export default props => {
     const {paged}=options;
 
     return (<TableContext.Consumer>
-        {({rows, headers, pageSize}) =>
-            <TBody rows={rows} headers={headers} paged={paged} pageSize={pageSize}/>
+        {({rows, headers, pageSize,currentPosition}) =>
+            <TBody {...{rows,headers,paged,pageSize,currentPosition}}/>
         }
     </TableContext.Consumer>)
 }

@@ -29,21 +29,53 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
         pageCount:0,
         currentPage:1,
         currentPosition:0,
-        pageEnd:()=>{},
-        pageStart:()=>{},
-        pageNext:()=>{
+        pageEnd:()=>{
             this.setState((state)=>{
-                const {currentPage:prevPage} = state;
-                    let currentPage =prevPage+1;
-                return {...state,currentPage}
+                const nextPosition = state.rows.length % state.pageSize === 0 ? 0 : state.rows.length - state.rows.length % state.pageSize
+                return {
+                    ...state,
+                    currentPage:state.pageCount,
+                    currentPosition:nextPosition
+                }
             })
         },
-        pagePrev:()=>{},
+        pageStart:()=>{
+            this.setState((state)=>{
+                return {
+                    ...state,
+                    currentPage:1,
+                    currentPosition:0
+                }
+            })
+        },
+        pageNext:()=>{
+            this.setState((state)=>{
+                const {currentPage} = state;
+                    let nextPage =currentPage+1;
+                return {
+                    ...state,
+                    currentPage:nextPage,
+                    currentPosition:state.currentPosition + state.pageSize
+                }
+            })
+        },
+        pagePrev:()=>{
+            this.setState((state)=>{
+                const {currentPage} = state;
+                let nextPage =currentPage - 1;
+                let nextPosition = state.currentPosition - state.pageSize < 0 ? 0 : state.currentPosition - state.pageSize
+                return {
+                    ...state,
+                    currentPage:nextPage,
+                    currentPosition:nextPosition
+                }
+            })
+        },
         setPageSize:(value)=>{
 
             this.setState((state)=>{
-                const totalPages=Math.ceil(state.rows.length/value)
-                return {...state,pageSize:value,totalPages}})
+                const pageCount=Math.ceil(state.rows.length/value)
+                return {...state,pageSize:value,pageCount}})
         },
         setSortState: (event, id): void => {
 

@@ -3,9 +3,8 @@ import {Cell} from "./cell"
 
 export const Row = (props) => {
     const getCells = ():any => {
-        const headerLastIndex = props.headers.length - 1,
-            headers=props.headers[headerLastIndex],
-            keys=headers.map((item)=>item.id);
+        const headers=props.headers[props.headers.length - 1],
+                keys=headers.map((item)=>item.id);
         /*
          * If Row is an array of strings,numbers or components
          */
