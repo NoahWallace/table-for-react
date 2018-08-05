@@ -13,45 +13,60 @@ import {TableContext} from "../provider";
 
 class Cell extends React.Component<any, any> {
     render() {
-        const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headerLength} = this.props;
+        const {
+            setPageSize,
+            pageSize,
+            pageCount,
+            currentPage,
+            pageNext,
+            pagePrev,
+            pageEnd,
+            pageStart,
+            headerLength,
+            icons,
+            pageOptions
+        } = this.props;
         const pgPrevDsbl = currentPage === 1,
-            pgPrevCls = classNames("paging_button",{"paging_button--disabled":pgPrevDsbl}),
+            pgPrevCls = classNames("paging_button", {"paging_button--disabled": pgPrevDsbl}),
             pgNextDsbl = currentPage === pageCount,
-            pgNextCls=classNames("paging_button",{"paging_button--disabled":pgNextDsbl})
+            pgNextCls = classNames("paging_button", {"paging_button--disabled": pgNextDsbl})
         return (
             <td colSpan={headerLength} className="cell">
                 <div className={"content pager"}>
                     <PagerSelect setPageSize={setPageSize}
                                  pageSize={pageSize}
                                  currentPage={currentPage}
-                                 totalPages={pageCount}/>
+                                 totalPages={pageCount}
+                                 pageOptions={pageOptions}
+                    />
                     <button type="button"
                             className={pgPrevCls}
                             onClick={pageStart}
                             disabled={pgPrevDsbl}
                     >
-                        <FontAwesomeIcon icon={faAngleDoubleLeft}/>
+                        {icons && icons.pageStart || <FontAwesomeIcon icon={faAngleDoubleLeft}/>}
                     </button>
                     <button type="button"
                             className={pgPrevCls}
                             onClick={pagePrev}
                             disabled={pgPrevDsbl}
                     >
-                        <FontAwesomeIcon icon={faAngleLeft}/></button>
+                        {icons && icons.pagePrev || <FontAwesomeIcon icon={faAngleLeft}/>}
+                    </button>
                     <div className={'pager_position'}>{currentPage} of {pageCount}</div>
                     <button type="button"
                             className={pgNextCls}
                             onClick={pageNext}
                             disabled={pgNextDsbl}
                     >
-                        <FontAwesomeIcon icon={faAngleRight}/>
+                        {icons && icons.pageNext || <FontAwesomeIcon icon={faAngleRight}/>}
                     </button>
                     <button type="button"
                             className={pgNextCls}
                             onClick={pageEnd}
                             disabled={pgNextDsbl}
                     >
-                        <FontAwesomeIcon icon={faAngleDoubleRight}/>
+                        {icons && icons.pageEnd || <FontAwesomeIcon icon={faAngleDoubleRight}/>}
                     </button>
                 </div>
             </td>
@@ -62,10 +77,21 @@ class Cell extends React.Component<any, any> {
 export default props => (
     <TableContext.Consumer>
         {state => {
-            const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headers} = state;
-            const headerLength=headers[headers.length-1].length
+            const {setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart, headers} = state;
+            const headerLength = headers[headers.length - 1].length;
             return (
-                <Cell {...{setPageSize, pageSize, pageCount, currentPage, pageNext, pagePrev, pageEnd, pageStart,headerLength}} />)
+                <Cell {...{
+                    setPageSize,
+                    pageSize,
+                    pageCount,
+                    currentPage,
+                    pageNext,
+                    pagePrev,
+                    pageEnd,
+                    pageStart,
+                    headerLength,
+                    ...props
+                }} />)
         }}
     </TableContext.Consumer>
 )

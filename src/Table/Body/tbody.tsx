@@ -16,7 +16,7 @@ class TBody extends React.Component<any, any> {
     render() {
 
         return (
-            <tbody>
+            <tbody className={"body"}>
             {this.getRows()}
             </tbody>
         )

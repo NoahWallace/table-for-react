@@ -6,15 +6,15 @@ export interface IProviderState extends ITableProps {
     sortState: [string, number][],
     setSortState: Function;
     pageSize: number;
-    paged?:boolean;
-    setPageSize:Function;
-    pageCount:number;
-    currentPage:number;
-    pageEnd:Function;
-    pageStart:Function;
-    pageNext:Function;
-    pagePrev:Function;
-    currentPosition:number;
+    paged?: boolean;
+    setPageSize: Function;
+    pageCount: number;
+    currentPage: number;
+    pageEnd: Function;
+    pageStart: Function;
+    pageNext: Function;
+    pagePrev: Function;
+    currentPosition: number;
 }
 
 export const TableContext = React.createContext<IProviderState | any>({});
@@ -25,57 +25,58 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
         sortState: [],
         headers: [],
         rows: [],
-        pageSize:10,
-        pageCount:0,
-        currentPage:1,
-        currentPosition:0,
-        pageEnd:()=>{
-            this.setState((state)=>{
+        pageSize: 10,
+        pageCount: 0,
+        currentPage: 1,
+        currentPosition: 0,
+        pageEnd: () => {
+            this.setState((state) => {
                 const nextPosition = state.rows.length % state.pageSize === 0 ? 0 : state.rows.length - state.rows.length % state.pageSize
                 return {
                     ...state,
-                    currentPage:state.pageCount,
-                    currentPosition:nextPosition
+                    currentPage: state.pageCount,
+                    currentPosition: nextPosition
                 }
             })
         },
-        pageStart:()=>{
-            this.setState((state)=>{
+        pageStart: () => {
+            this.setState((state) => {
                 return {
                     ...state,
-                    currentPage:1,
-                    currentPosition:0
+                    currentPage: 1,
+                    currentPosition: 0
                 }
             })
         },
-        pageNext:()=>{
-            this.setState((state)=>{
+        pageNext: () => {
+            this.setState((state) => {
                 const {currentPage} = state;
-                    let nextPage =currentPage+1;
+                let nextPage = currentPage + 1;
                 return {
                     ...state,
-                    currentPage:nextPage,
-                    currentPosition:state.currentPosition + state.pageSize
+                    currentPage: nextPage,
+                    currentPosition: state.currentPosition + state.pageSize
                 }
             })
         },
-        pagePrev:()=>{
-            this.setState((state)=>{
+        pagePrev: () => {
+            this.setState((state) => {
                 const {currentPage} = state;
-                let nextPage =currentPage - 1;
+                let nextPage = currentPage - 1;
                 let nextPosition = state.currentPosition - state.pageSize < 0 ? 0 : state.currentPosition - state.pageSize
                 return {
                     ...state,
-                    currentPage:nextPage,
-                    currentPosition:nextPosition
+                    currentPage: nextPage,
+                    currentPosition: nextPosition
                 }
             })
         },
-        setPageSize:(value)=>{
+        setPageSize: (value) => {
 
-            this.setState((state)=>{
-                const pageCount=Math.ceil(state.rows.length/value)
-                return {...state,pageSize:value,pageCount}})
+            this.setState((state) => {
+                const pageCount = Math.ceil(state.rows.length / value)
+                return {...state, pageSize: value, pageCount}
+            })
         },
         setSortState: (event, id): void => {
 
@@ -127,14 +128,17 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
 
     constructor(props) {
         super(props);
-        const {headers, rows, onSort} = this.props;
+        const {headers, rows, onSort, options = {}} = this.props;
+
+        if (options.pageSize) this.state.pageSize = options.pageSize;
+
         if (headers) {
             this.state.headers = headers;
             headers[headers.length - 1].map((headerCell: IHeaderProps) => {
                 const {options, id} = headerCell;
                 if (options && options.initialSort) {
                     const sortValue = getSortDirection(options.initialSort);
-                    const sortId =  id;
+                    const sortId = id;
                     if (options.initialSortIdx !== undefined &&
                         options.initialSortIdx !== null &&
                         !isNaN(options.initialSortIdx)) {
@@ -151,7 +155,7 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
             const {headers} = this.props,
                 {sortState} = this.state;
 
-            this.state.pageCount=Math.ceil(rows.length/10);
+            this.state.pageCount = Math.ceil(rows.length / 10);
 
             if (!onSort) {
                 const sortedRows = setSortedRows(rows, headers, sortState);
@@ -162,9 +166,13 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
             }
         }
     }
-    setPageCount = () =>{
-        this.setState((state)=>{return {...state,pageCount:state.rows.length}})
+
+    setPageCount = () => {
+        this.setState((state) => {
+            return {...state, pageCount: state.rows.length}
+        })
     }
+
     render() {
         return (
             <TableContext.Provider value={this.state}>

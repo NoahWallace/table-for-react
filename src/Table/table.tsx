@@ -23,7 +23,7 @@ export class Table extends React.Component<ITableProps, {}> {
                     {caption && <caption>{caption}</caption>}
                     <THead headers={headers} options={options} />
                     <TBody options={options}/>
-                    {options.paged && <TFoot/>}
+                    {options.paged && <TFoot icons={options.icons} pageOptions={options.pageOptions}/>}
                 </table>
             </TableProvider>
         )

@@ -1,11 +1,18 @@
 import React from 'react'
 import Cell from "./cell";
+import {ITableIcons, ITableOptions} from '../table.d'
 
-export class Row extends React.Component<any, any> {
+export interface IFooterCellProps {
+    icons:ITableIcons;
+    pageOptions:ITableOptions["pageOptions"]
+}
+
+export class Row extends React.Component<IFooterCellProps, any> {
     render(){
+        const {icons, pageOptions} = this.props;
         return(
             <tr className="footer_row">
-                <Cell/>
+                <Cell {...{icons,pageOptions}}/>
             </tr>
         )
     }

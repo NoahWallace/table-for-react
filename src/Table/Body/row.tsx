@@ -11,7 +11,8 @@ export const Row = (props) => {
         if (Array.isArray(props.cells)) {
             return props.cells.map((v,idx) =>{
                 if(idx > headers.length -1){return null}
-                return( <Cell key={`Cell_${idx}`} value={v}/>)
+                const className = headers[idx].options && headers[idx].options.columnClass || '';
+                return( <Cell key={`Cell_${idx}`} value={v} className={className} />)
             })
         }
         /*
@@ -29,17 +30,23 @@ export const Row = (props) => {
             })
             .filter(c => c[2] !== undefined)
             .sort((a, b) => a[2] > b[2] ? 1 : -1)
-
+        /*
+         * If header includes id of cell entry
+         */
         keys.map((entry,idx)=>{
-            let hasItem=cells.find((b)=>b[0]===entry)
+            let hasItem=cells.find((b)=>b[0]===entry);
             if(!hasItem){cells.splice(idx,0,[entry,"",idx])}
-        })
+        });
 
-        return cells.map((_,idx) => <Cell key={`body_${idx}_row`} value={_[1]}/>)
+        return cells.map((cell,idx) => {
+            const headerEntry=headers.find((item)=>item.id===cell[0]);
+            const className= headerEntry.options && headerEntry.options.columnClass || '';
+            return <Cell key={`body_${idx}_row`} value={cell[1]} className={className}/>
+        })
     }
 
     return (
-        <tr>
+        <tr className="body_row">
             {getCells()}
         </tr>
     )

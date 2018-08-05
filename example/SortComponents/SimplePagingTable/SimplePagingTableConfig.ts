@@ -12,6 +12,8 @@ export const simplePagingTableConfig = {
         ]
     ],
     options:{
-        paged:true
+        paged:true,
+        pageOptions:[15,30,60],
+        pageSize:15
     }
 }

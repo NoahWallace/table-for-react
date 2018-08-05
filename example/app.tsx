@@ -11,6 +11,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import "./CSS/example.pcss";
 import {SimpleSortTable} from "./SortComponents/SimpleSortTable";
 import {SimplePagingTable} from "./SortComponents/SimplePagingTable";
+import {CustomCSSTable} from "./SortComponents/CustomCSSTable";
 
 
 export class Layout extends React.Component {
@@ -38,7 +39,10 @@ export class Layout extends React.Component {
                                     <NavItem eventKey={3}>Client Side Sorting</NavItem>
                                 </LinkContainer>
                                 <LinkContainer to="/simple_paging">
-                                    <NavItem eventKey={3}>Client Side Paging</NavItem>
+                                    <NavItem eventKey={4}>Client Side Paging</NavItem>
+                                </LinkContainer>
+                                <LinkContainer to="/custom_css">
+                                    <NavItem eventKey={5}>Custom CSS Table</NavItem>
                                 </LinkContainer>
                             </Nav>
                         </Col>
@@ -48,6 +52,7 @@ export class Layout extends React.Component {
                             <Route exact path="/basic" component={BasicTable}/>
                             <Route exact path="/simple" component={SimpleSortTable}/>
                             <Route exact path="/simple_paging" component={SimplePagingTable}/>
+                            <Route exact path="/custom_css" component={CustomCSSTable}/>
                             </Grid>
                         </Col>
                     </Row>

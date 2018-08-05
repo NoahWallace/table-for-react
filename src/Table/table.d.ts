@@ -13,6 +13,8 @@ export interface ITableProps {
 export interface ITableOptions {
     icons?: ITableIcons;
     paged?: boolean;
+    pageOptions?:number[];
+    pageSize?:number;
 }
 
 export interface ITableIcons {
@@ -22,7 +24,7 @@ export interface ITableIcons {
     pageNext?: JSX.Element;
     pageEnd?: JSX.Element;
     pagePrev?: JSX.Element;
-    pageFirst?: JSX.Element;
+    pageStart?: JSX.Element;
 
 }
 
@@ -41,6 +43,7 @@ export interface IHeaderOptions {
     initialSort?: string;
     initialSortIdx?:number;
     sortOnId?:string;
+    colGroupClass?:string;
 }
 
 
