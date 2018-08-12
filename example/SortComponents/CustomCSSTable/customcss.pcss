@@ -1,4 +1,5 @@
 .myCustomTable {
+
   .center {
     text-align: center
   }
@@ -11,15 +12,19 @@
   .cell {
     border: none
   }
+
   .header {
     box-shadow: 0 6px 10px -5px #464646;
     .header_row {
-      background-color: #dbdbdb;
+      background-color: #f4f5f5;
 
       .cell {
         color: #464646;
         font-weight: bold;
-        border-bottom: 1px solid #6c6c6c;
+        border-bottom: 1px solid #acacac;
+        .sort {
+          color: #43b5dd;
+        }
         .content {
           margin: 8px;
           padding-right: 12px;
@@ -29,8 +34,33 @@
   }
   .body {
     .body_row {
+      &:nth-child(even) {
+        .cell {
+          background: #fcfcfc;
+        }
+      }
       .cell {
-        border-bottom: 1px solid #ebebeb
+        border-bottom: 1px solid #ebebeb;
+        padding: 8px 6px;
+      }
+    }
+  }
+  .footer {
+    .footer_row .cell {
+      .content {
+        &.pager {
+          .pager_select {
+            .pager_select_button {
+              background: #97d6ec;
+            }
+          }
+          .paging_button {
+            border-radius: 5px;
+            &--disabled {
+              background: #e6f9ff;
+            }
+          }
+        }
       }
     }
   }

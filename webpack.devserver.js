@@ -1,12 +1,14 @@
 const path = require('path');
-
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const ExtractLibPlugin = new ExtractTextPlugin("[name].lib.css");
+const ExtractProjPlugin = new ExtractTextPlugin("[name].css");
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     template: __dirname + '/example/index.html',
     filename: 'index.html',
     inject: 'body'
-})
+});
 module.exports = {
     mode: 'development',
     entry: {app:'./example/app.tsx'},
@@ -26,23 +28,33 @@ module.exports = {
     },
     module: {
         rules: [
-
+            {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
             {
                 test: /\.pcss$/,
-                loader: ExtractTextPlugin.extract( [
-
-                    {loader: 'css-loader', options: {importLoaders: 1}},
+                loader: ExtractLibPlugin.extract( [
+                    // cannot use styleloader here due to issues with postcss version
+                    {loader: 'css-loader', options: {importLoaders: 0}},
                     'postcss-loader',
 
-
-                ])
+                ]),
+                include:[path.resolve(__dirname,"src/")],
+               // exclude:path.resolve(__dirname,"example")
             },
-            {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
-
-
+            {
+                test: /\.p?css$/,
+                loader: ExtractProjPlugin.extract( [
+                    // cannot use styleloader here due to issues with postcss version
+                    {loader: 'css-loader', options: {importLoaders: 0}},
+                    'postcss-loader',
+                ]),
+                include:[path.resolve(__dirname,"example/"),path.resolve(__dirname,"node_modules/")],
+               // exclude:[path.resolve(__dirname,"src")]
+            },
         ]
     },
     plugins: [
         HTMLWebpackPluginConfig,
-        new ExtractTextPlugin('[name].bundle.css')]
+        ExtractLibPlugin,
+        ExtractProjPlugin,
+    ]
 }

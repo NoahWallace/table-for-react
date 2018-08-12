@@ -1,18 +1,16 @@
 import React from 'react';
-
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import {Grid, Row, Col, Nav, NavItem, PageHeader} from 'react-bootstrap'
-import {Home} from "./home";
-import {BasicTable} from "./SortComponents";
 import ReactDOM from "react-dom";
 import {LinkContainer} from 'react-router-bootstrap'
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {Grid, Row, Col, Nav, NavItem, PageHeader} from 'react-bootstrap';
 
-
-import "./CSS/example.pcss";
+import {Home} from "./home";
+import {BasicTable} from "./SortComponents";
 import {SimpleSortTable} from "./SortComponents/SimpleSortTable";
 import {SimplePagingTable} from "./SortComponents/SimplePagingTable";
 import {CustomCSSTable} from "./SortComponents/CustomCSSTable";
 
+import "./CSS/example.pcss";
 
 export class Layout extends React.Component {
 
@@ -52,7 +50,7 @@ export class Layout extends React.Component {
                             <Route exact path="/basic" component={BasicTable}/>
                             <Route exact path="/simple" component={SimpleSortTable}/>
                             <Route exact path="/simple_paging" component={SimplePagingTable}/>
-                            <Route exact path="/custom_css" component={CustomCSSTable}/>
+                            <Route path="/custom_css" component={CustomCSSTable}/>
                             </Grid>
                         </Col>
                     </Row>

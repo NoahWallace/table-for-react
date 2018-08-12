@@ -1,1 +1,1 @@
-export * from './tfoot'
+export {default as Pager} from './pager'

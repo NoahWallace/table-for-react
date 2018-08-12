@@ -1,5 +1,5 @@
 import React from 'react'
-import Cell from "./cell";
+
 import {ITableIcons, ITableOptions} from '../table.d'
 
 export interface IFooterCellProps {
@@ -12,7 +12,7 @@ export class Row extends React.Component<IFooterCellProps, any> {
         const {icons, pageOptions} = this.props;
         return(
             <tr className="footer_row">
-                <Cell {...{icons,pageOptions}}/>
+
             </tr>
         )
     }

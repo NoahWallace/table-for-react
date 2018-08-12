@@ -1,118 +1,118 @@
-
-.react-table {
-  .header {
-    .header_row {
-      .cell {
-        .content {
-          margin: 0;
-        }
-        &--sortable {
-          position: relative;
-          > .content {
-            margin-right: 20px;
+.react-table-container {
+  .react-table {
+    width: 100%;
+    .header {
+      .header_row {
+        .cell {
+          .content {
+            margin: 0;
           }
-          > .sort {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            width: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            .sort {
-              &--up, &--down {
-                flex: 0 0 14px;
-                height: 50%;
-                text-align: center;
+          &--sortable {
+            position: relative;
+            padding:12px;
+            > .content {
+              margin-right: 20px;
+            }
+            > .sort {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              right: 0;
+              width: 20px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              .sort {
+                &--up, &--down {
+                  flex: 0 0 14px;
+                  height: 50%;
+                  text-align: center;
+                }
               }
             }
           }
         }
       }
     }
+    .hidden {
+      display: none;
+    }
   }
-  .hidden {
-    display: none;
-  }
-  .footer {
-    .footer_row {
-      .cell {
-        .content {
-          display: grid;
-          grid-template-rows: auto;
-          grid-template-columns: auto 100px 45px 45px 100px 45px 45px;
-          grid-template-areas: "open page-select left-double left right right-double";
-          &.pager {
-            .pager_position {
-              line-height: 40px;
-              font-size: 16px;
+  .pager_container {
+    display: inline-block;
+    width: 100%;
+    margin: 6px;
+    .pager_grid {
+      display: grid;
+      grid-template-rows: auto;
+      grid-template-columns: auto 100px 45px 45px 100px 45px 45px;
+      grid-template-areas: "open page-select left-double left right right-double";
+    }
+    .pager_position {
+      line-height: 40px; text-align:center;
+      font-size: 16px;
+    }
+    .pager_select {
+      position: relative;
+      padding-right: 50px;
+      height: 40px;
+      border: 1px solid #ebebeb;
+      margin: auto 0px;
+      &_value {
+        text-align: left;
+        margin: 0 6px;
+        display: inline-block;
+        width: 100%;
+        line-height: 40px;
+      }
+      &_button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 32px;
+        line-height: 40px;
+        font-size: 16px;
+      }
+      &_dropdown {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 38px;
+        border: 1px solid #ebebeb;
+        .dropdown_valuegroup {
+          margin: 0;
+           list-style-type: none;
+          width: 100%;
+          background: white;
+          padding: 0;
+          .dropdown_item {
+            display: block;
+            text-align: left;
+            padding: 0 6px;
+            line-height: 32px;
+            &.selected {
+              background-color: #ebebeb;
             }
-            .pager_select {
-              position: relative;
-              padding-right: 50px;
-              height: 40px;
-              border: 1px solid #ebebeb;
-              margin: auto 0px;
-              &_value {
-                text-align: left;
-                margin: 0 6px;
-                display: inline-block;
-                width: 100%;
-                line-height: 40px;
-              }
-              &_button {
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 32px;
-                line-height: 40px;
-                font-size: 16px;
-              }
-              &_dropdown {
-                position: absolute;
-                right: 0;
-                left: 0;
-                top: 38px;
-                border: 1px solid #ebebeb;
-                .dropdown_valuegroup {
-                  margin: 0;
-                   list-style-type: none;
-                  width: 100%;
-                  background: white;
-                  padding: 0;
-                  .dropdown_item {
-                    display: block;
-                    text-align: left;
-                    padding: 0 6px;
-                    line-height: 32px;
-                    &.selected {
-                      background-color: #ebebeb;
-                    }
-                    &:hover {
-                      cursor: pointer;
-                      background-color: #ebebeb;
-                    }
-                  }
-                }
-              }
-            }
-            .paging_button {
-              border-radius: 45px;
-              padding: 6px;
-              background-color: transparent;
-              margin: auto 6px;
-              outline: 0;
-              &:focus, &:hover {
-                font-size: 105%;
-                box-shadow: 0 0 1px #464646;
-              }
-              &--disabled {
-                background: #ebebeb;
-              }
+            &:hover {
+              cursor: pointer;
+              background-color: #ebebeb;
             }
           }
         }
+      }
+    }
+    .paging_button {
+      border-radius: 45px;
+      padding: 6px;
+      background-color: transparent;
+      margin: auto 6px;
+      outline: 0;
+      &:focus, &:hover {
+        font-size: 105%;
+        box-shadow: 0 0 1px #464646;
+      }
+      &--disabled {
+        background: #ebebeb;
       }
     }
   }

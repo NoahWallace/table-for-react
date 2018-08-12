@@ -4,13 +4,12 @@ import cls from 'classnames';
 import {TableProvider} from "./provider";
 import {THead} from "./Header";
 import TBody from "./Body";
-import {TFoot} from "./Footer";
-
-import './table.pcss';
+import {Pager} from "./Footer";
 import {ITableProps} from './table.d';
 
-export class Table extends React.Component<ITableProps, {}> {
+import './table.pcss';
 
+export class Table extends React.Component<ITableProps, {}> {
 
 
     render() {
@@ -19,12 +18,14 @@ export class Table extends React.Component<ITableProps, {}> {
         let cssClass = cls('react-table', className);
         return (
             <TableProvider {...this.props} >
-                <table className={cssClass}>
-                    {caption && <caption>{caption}</caption>}
-                    <THead headers={headers} options={options} />
-                    <TBody options={options}/>
-                    {options.paged && <TFoot icons={options.icons} pageOptions={options.pageOptions}/>}
-                </table>
+                <div className={"react-table-container"}>
+                    <table className={cssClass}>
+                        {caption && <caption>{caption}</caption>}
+                        <THead headers={headers} options={options}/>
+                        <TBody options={options}/>
+                    </table>
+                    {options.paged && <Pager icons={options.icons} pageOptions={options.pageOptions}/>}
+                </div>
             </TableProvider>
         )
     }
