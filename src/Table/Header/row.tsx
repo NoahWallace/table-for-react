@@ -6,10 +6,9 @@ export interface IHeaderRowProps {
     row: IHeaderProps[];
     options: ITableOptions;
     rowIdx: number;
-    p?:any;
 }
 
-export class Row extends React.Component<any, any> {
+export class Row extends React.Component<IHeaderRowProps, any> {
 
     getCells = () => {
         const {row,  options, rowIdx } = this.props;

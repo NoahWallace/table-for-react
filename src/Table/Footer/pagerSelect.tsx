@@ -5,7 +5,7 @@ import cls from 'classnames'
 
 export class PagerSelect extends React.Component<any, any> {
     state = {
-        options: [10, 25, 50 ],
+        options: [10, 25, 50],
         open: false
     }
 
@@ -26,8 +26,8 @@ export class PagerSelect extends React.Component<any, any> {
         const {pageSize, pageOptions} = this.props;
 
         let options = (pageOptions || this.state.options).map((item) => <li key={`dropdown_${item}`}
-                                                           className={cls("dropdown_item",{"selected":item === pageSize})}
-                                                           onClick={() => this.setValue(item)}>{item}</li>);
+                                                                            className={cls("dropdown_item", {"selected": item === pageSize})}
+                                                                            onClick={() => this.setValue(item)}>{item}</li>);
         let hidden = this.state.open ? '' : 'hidden';
         return (
             <div className="pager_select">
