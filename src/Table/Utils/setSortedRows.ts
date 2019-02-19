@@ -1,14 +1,19 @@
-export function setSortedRows(rows, headers, sortState):any[] {
+export function setSortedRows(rows, headers, rowKey, sortState): any[] {
     const lastHeaderRow = headers[headers.length - 1]
-    return rows.map((row):any[] => {
+    return rows.map((row): any[] => {
         if (Array.isArray(row)) {
-            let sortArray = row.map((item, idx) => {
 
+            let sortArray = row.map((item, idx) => {
                 let sortId;
-                if(lastHeaderRow[idx]){
-                    sortId= lastHeaderRow[idx].id;
+                if (lastHeaderRow[idx]) {
+                    sortId = lastHeaderRow[idx].id
                 }
-                else { sortId=idx }
+                else if (rowKey === idx) {
+                    sortId = idx
+                }
+                else {
+                    sortId = idx
+                }
                 return {[sortId]: row[idx]}
             });
 
@@ -21,7 +26,7 @@ export function setSortedRows(rows, headers, sortState):any[] {
         let sortValue = 0;
 
         for (let i = 0; i < sortState.length; ++i) {
-            const sortIdx = lastHeaderRow.find((item)=>item.id===sortState[i][0])
+            const sortIdx = lastHeaderRow.find((item) => item.id === sortState[i][0])
             let sortKey = sortIdx.options && sortIdx.options.sortOnId || sortState[i][0];
             let direction = sortState[i][1];
 

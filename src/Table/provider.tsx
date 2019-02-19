@@ -15,6 +15,7 @@ export interface IProviderState extends ITableProps {
     pageNext: Function;
     pagePrev: Function;
     currentPosition: number;
+    rowKey?: string | number;
 }
 
 export const TableContext = React.createContext<IProviderState | any>({});
@@ -25,6 +26,7 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
         sortState: [],
         headers: [],
         rows: [],
+        rowKey: null,
         pageSize: 10,
         pageCount: 0,
         currentPage: 1,
@@ -80,7 +82,7 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
         },
         setSortState: (event, id): void => {
 
-            const {sortState} = this.state,
+            const {sortState, rowKey} = this.state,
                 {onSort} = this.props,
                 multi = event.ctrlKey || event.metaKey,
                 sort = sortState.find((item) => item[0] === id),
@@ -107,7 +109,7 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
                  * if not, sort rows and reset state
                  */
                 if (!onSort) {
-                    let setRows = setSortedRows(rows, headers, sortState);
+                    let setRows = setSortedRows(rows, headers, rowKey, sortState);
                     return {...state, sortState: sortState, rows: setRows}
                 }
                 return {...state, sortState: sortState}
@@ -152,25 +154,19 @@ export class TableProvider extends Component<ITableProps, IProviderState> {
             })
         }
         if (rows) {
-            const {headers} = this.props,
-                {sortState} = this.state;
+            const {headers} = this.props
+            const {sortState, rowKey} = this.state;
 
-            this.state.pageCount = Math.ceil(rows.length / 10);
+            this.state.pageCount = Math.ceil(rows.length / this.state.pageSize);
 
             if (!onSort) {
-                const sortedRows = setSortedRows(rows, headers, sortState);
-                this.state.rows = sortedRows;
+                this.state.rows = setSortedRows(rows, headers, rowKey, sortState);
             }
             else {
+
                 this.state.rows = rows;
             }
         }
-    }
-
-    setPageCount = () => {
-        this.setState((state) => {
-            return {...state, pageCount: state.rows.length}
-        })
     }
 
     render() {
